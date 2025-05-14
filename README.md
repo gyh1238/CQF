@@ -1,6 +1,3 @@
-Below is a **drop-in `README.md`** you can copy to the root of `gyh1238/CQF`.
-All file names are **relative to the repo**; feel free to adjust any placeholder that does not exactly match your directory listing (e.g. the real PNG names inside `fig/`).
-The structure and tone follow typical open-source templates while echoing the key ideas and terminology from your paper.
 ------------------------------------------------------------------------------------------------------------------------
 
 ```markdown
