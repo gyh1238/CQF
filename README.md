@@ -2,7 +2,7 @@
 *A universal quantum workflow for inter-/intra-cell resource optimisation*
 
 > **Paper:** “A Universal Quantum Framework for Assignment Optimisation in  
-> Network Administration” (IEEE Communications Magazine, 2025)  
+> Network Administration” (IEEE X, 20xx)  
 > **Authors:** Yong Hun Jang · Junyoung Hwang · Wookjin Lee · Sang Hyun Lee
 
 ---
@@ -39,7 +39,7 @@ CQF/
 │  └─ README\_code.md
 └─ README.md            # (you are here)
 
-````
+
 
 ### What lives where?
 
@@ -82,14 +82,43 @@ Each notebook initialises **state qubits** for assignments, attaches **auxiliary
 
 ---
 
-## 5  Results in a nutshell
+## 5  Results and Visualisation
 
-| Task                               | Optimal-solution hit-rate | ≤ 5 % deviation |
-| ---------------------------------- | ------------------------- | --------------- |
-| Inter-cell power minimisation      | **95 %**                  | **98.6 %**      |
-| Intra-cell throughput maximisation | **93 %**                  | **96.8 %**      |
+CQF demonstrates high-quality solutions under both problem types:
 
-These match the empirical CDFs reported in Fig. 6.&#x20;
+| Task                          | Exact-optimal hit-rate | ≤ 5% deviation |
+|------------------------------|------------------------|----------------|
+| Inter-cell power minimisation | **98.6%**              | **98.6%**      |
+| Intra-cell throughput maximisation | **96.8%**         | **96.8%**      |
+
+### 📍 Inference Histograms
+These histograms show the measured quantum output bitstrings over 100,000 shots.
+Each spike indicates a feasible assignment decoded from the qubit register.
+
+<div align="center">
+  <img src="fig/inter_histogram.png" width="380"/>
+  <br><em>Fig – Measured bitstring distribution for inter-cell assignment</em>
+</div>
+
+<div align="center">
+  <img src="fig/intra_histogram.png" width="380"/>
+  <br><em>Fig – Measured bitstring distribution for intra-cell assignment</em>
+</div>
+
+### 🔍 Quantum Circuits
+The exact quantum circuits for each case are constructed with controlled phase rotations and constraint oracles.
+
+<div align="center">
+  <img src="fig/inter_circuit.png" width="500"/>
+  <br><em>Fig – Quantum circuit for inter-cell association</em>
+</div>
+
+<div align="center">
+  <img src="fig/intra_circuit.png" width="700"/>
+  <br><em>Fig – Quantum circuit for intra-cell RB allocation</em>
+</div>
+
+These circuits use modular constraint encoders (see `oracle.py`) and phase encoding functions (`phase_utils.py`) to support arbitrary cost models. Bitwise exclusivity, access limits, and real-valued link costs are handled by custom oracles applied before amplitude amplification.
 
 ---
 
@@ -101,8 +130,8 @@ If CQF helps your research, please cite the original article:
 @article{jang2025cqf,
   title   = {A Universal Quantum Framework for Assignment Optimization in Network Administration},
   author  = {Jang, Yong Hun and Hwang, Junyoung and Lee, Wookjin and Lee, Sang Hyun},
-  journal = {IEEE Communications Magazine},
-  year    = {2025},
+  journal = {IEEE X},
+  year    = {20xx},
 }
 ```
 
@@ -110,7 +139,7 @@ If CQF helps your research, please cite the original article:
 
 ## 7  Contact / Questions
 
-Open an issue or reach out to **sanghyunlee \[at] korea.ac.kr**.
+Open an issue or reach out to **disclose \[at] korea.ac.kr**.
 Contributions (bug reports, pull requests, alternative oracle designs) are welcome!
 
 ---
