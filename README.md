@@ -56,13 +56,13 @@ CQF/
 
 ## 3. Five-Step Workflow (all notebooks)
 
-| #     | Function / Cell                 | What happens                                                                                             |   |   |   |           |
-| ----- | ------------------------------- | -------------------------------------------------------------------------------------------------------- | - | - | - | --------- |
-| **1** | `generate_problem()`            | Build or load cost / power matrices, AP limits, etc.                                                     |   |   |   |           |
-| **2** | `encode_state()`                | Allocate the *state register* (`N × ⌈log₂M⌉` qubits) and one auxiliary qubit.                            |   |   |   |           |
-| **3** | `oracle.*()`                    | (a) flip the aux qubit if a configuration is **feasible**<br>(b) add a cost-proportional **phase kick**. |   |   |   |           |
-| **4** | `run_amplitude_amplification()` | Apply the oracle → diffuser loop ⌊π⁄4 √(                                                                 | C | ⁄ | F | )⌋ times. |
-| **5** | `decode_counts()`               | Map the most frequent bitstring back to UE↔AP or UE↔RB indices.                                          |   |   |   |           |
+| #     | Function / Cell                 | What happens                                                                                             |
+| ----- | ------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| **1** | `generate_problem()`            | Build or load cost / power matrices, AP limits, etc.                                                     |
+| **2** | `encode_state()`                | Allocate the *state register* (`N × ⌈log₂M⌉` qubits) and one auxiliary qubit.                             |
+| **3** | `oracle.*()`                    | (a) flip the aux qubit if a configuration is **feasible**<br>(b) add a cost-proportional **phase kick**. |
+| **4** | `run_amplitude_amplification()` | Apply the oracle → diffuser loop ⌊π⁄4 √(| C | ⁄ | F | )⌋ times.                                           |
+| **5** | `decode_counts()`               | Map the most frequent bitstring back to UE↔AP or UE↔RB indices.                                          |
 
 Each function has an inline docstring. Press **⇧ + Tab** in Jupyter to view it.
 
