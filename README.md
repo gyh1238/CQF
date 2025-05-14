@@ -1,6 +1,3 @@
-------------------------------------------------------------------------------------------------------------------------
-
-```markdown
 # CQF – Continuous-valued Quantum Framework for Network Assignment  
 *A universal quantum workflow for inter-/intra-cell resource optimisation*
 
@@ -25,7 +22,6 @@ Classical brute force needs  \|𝐶\| = *M​N*  evaluations; CQF lowers the cos
 
 ## 2  Repository layout
 
-```
 
 CQF/
 ├─ fig/                 # High-resolution figures used in the paper
