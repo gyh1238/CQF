@@ -94,23 +94,6 @@ def power_to_phase(p, p_min, p_max):
 
 This framework is not just theoretical — it produces measurable quantum outputs and interpretable results. Each notebook generates figures like those below. These figures explain what the code is doing at every stage.
 
----
-
-### Assignment Outputs (Fig. 6-style)
-
-The quantum algorithm solves both **inter-cell** (user-to-AP) and **intra-cell** (RB-to-user) problems.
-
-<p align="center">
-  <img src="fig/fig6_performance_map.png" width="700"/>
-  <br><em>fig/fig6_performance_map.png — Visual overlay of both tasks on a campus map</em>
-</p>
-
-- Bottom left: Inter-cell assignment minimizes total power across APs under capacity limits.
-- Top right: Intra-cell assignment maximizes total throughput to multiple UEs sharing an AP.
-- Right panels: Histograms show how often the quantum algorithm outputs near-optimal solutions.
-
----
-
 ### Sampling Histograms: What did the quantum circuit return?
 
 Each run samples the quantum register thousands of times. These histograms show the distribution of measured bitstrings.
@@ -272,12 +255,18 @@ The figures below compare the quantum algorithm’s solution quality to classica
 
 Over 95% of quantum outputs fall within 5% of the global optimum.
 
-### Digital Twin Simulatoin Results
+### Assignment Outputs (With Digital Twin Implementation)
+
+The quantum algorithm solves both **inter-cell** (user-to-AP) and **intra-cell** (RB-to-user) problems.
 
 <p align="center">
   <img src="fig/fig6_performance_map.png" width="700"/>
-  <br><em>Fig 6 – Simulation results for Korea University campus deployment</em>
+  <br><em>Simulation results for X University campus deployment</em>
 </p>
+
+- Bottom left: Inter-cell assignment minimizes total power across APs under capacity limits.
+- Top right: Intra-cell assignment maximizes total throughput to multiple UEs sharing an AP.
+- Right panels: Histograms show how often the quantum algorithm outputs near-optimal solutions.
 
 ---
 
