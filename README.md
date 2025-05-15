@@ -233,6 +233,7 @@ CQF achieves high fidelity in both problems:
 | Inter-cell power minimization      | 98.6%         |
 | Intra-cell throughput maximization | 96.8%         |
 
+
 ### Inference Histograms
 
 <div align="center">
@@ -241,19 +242,21 @@ CQF achieves high fidelity in both problems:
   <br><em>Measured output bitstrings – inter-cell assignment / intra-cell assignment</em>
 </div>
 
+
 ### Accuracy Compared to Baseline
 
-The figures below compare the quantum algorithm’s solution quality to classical baselines.
+The figures below compare the proposed quantum algorithm’s solution quality to quantized quantum baselines.
 <div align="center">
   <img src="fig/intra_dt_result.png" width="380"/>
   <img src="fig/inter_dt_result.png" width="380"/>
   <br><em>fig/intra_dt_result.png and fig/inter_dt_result.png — % of solutions within X% of optimal</em>
 </div>
 
-* Blue bars: This framework (quantum)
-* Orange bars: Greedy or exhaustive classical method
+* Blue bars: This framework
+* Orange bars: Quantized Quantum method
 
 Over 95% of quantum outputs fall within 5% of the global optimum.
+
 
 ### Assignment Outputs (With Digital Twin Implementation)
 
