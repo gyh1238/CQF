@@ -263,21 +263,17 @@ The accompanying paper formalises the continuous-valued assignment problem as a 
 
 CQF achieves high fidelity in both problems:
 
-| Task                               | Exact-optimal hit-rate | ≤5% deviation |
-| ---------------------------------- | ---------------------- | ------------- |
-| Inter-cell power minimization      | 98.6%                  | 98.6%         |
-| Intra-cell throughput maximization | 96.8%                  | 96.8%         |
+| Task                               | ≤5% deviation |
+| ---------------------------------- | ------------- |
+| Inter-cell power minimization      | 98.6%         |
+| Intra-cell throughput maximization | 96.8%         |
 
 ### Inference Histograms
 
 <div align="center">
   <img src="fig/inter_histogram.png" width="380"/>
-  <br><em>Measured output bitstrings – inter-cell assignment</em>
-</div>
-
-<div align="center">
   <img src="fig/intra_histogram.png" width="380"/>
-  <br><em>Measured output bitstrings – intra-cell assignment</em>
+  <br><em>Measured output bitstrings – inter-cell assignment / intra-cell assignment</em>
 </div>
 
 <div align="center">
