@@ -280,18 +280,16 @@ CQF achieves high fidelity in both problems:
   <br><em>Measured output bitstrings – intra-cell assignment</em>
 </div>
 
-### Gate-Level Quantum Circuits
-
 <div align="center">
-  <img src="fig/inter_circuit.png" width="600"/>
-  <br><em>Quantum circuit used in inter-cell demo</em>
+  <img src="fig/intra_dt_result.png" width="380"/>
+  <img src="fig/inter_dt_result.png" width="380"/>
+  <br><em>fig/intra_dt_result.png and fig/inter_dt_result.png — % of solutions within X% of optimal</em>
 </div>
 
-<div align="center">
-  <img src="fig/intra_circuit.png" width="700"/>
-  <br><em>Quantum circuit used in intra-cell demo</em>
-</div>
-
+<p align="center">
+  <img src="fig/fig6_performance_map.png" width="700"/>
+  <br><em>Fig 6 – Simulation results for Korea University campus deployment</em>
+</p>
 ---
 
 ## 13. Citation
@@ -301,7 +299,7 @@ If you use CQF in your research, please cite the following article:
 ```bibtex
 @article{jang2025cqf,
   title   = {A Universal Quantum Framework for Assignment Optimization in Network Administration},
-  author  = {Jang, Yong Hun and Hwang, Junyoung and Lee, Wookjin and Lee, Sang Hyun},
+  author  = {Yong Hun Jang, Junyoung Hwang, Wookjin Lee  and Sang Hyun Lee},
   journal = {IEEE X},
   year    = {20xx}
 }
@@ -313,13 +311,3 @@ If you use CQF in your research, please cite the following article:
 
 For questions or contributions, open an issue or contact:
 📧 **[disclose@korea.ac.kr](mailto:disclose@korea.ac.kr)**
-
----
-
-<p align="center">
-  <img src="fig/fig6_performance_map.png" width="700"/>
-  <br><em>Fig 6 – Simulation results for Korea University campus deployment</em>
-</p>
-```
-
----
