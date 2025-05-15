@@ -156,24 +156,6 @@ qc = build_phase_oracle(qc, state, cost_matrix, p_min, p_max)
 
 You can swap in your own constraints or cost models by editing `oracle.py` or `phase_utils.py`.
 
----
-
-### Accuracy Compared to Baseline
-
-The figures below compare the quantum algorithm’s solution quality to classical baselines.
-
-<div align="center">
-  <img src="fig/intra_dt_result.png" width="380"/>
-  <img src="fig/inter_dt_result.png" width="380"/>
-  <br><em>fig/intra_dt_result.png and fig/inter_dt_result.png — % of solutions within X% of optimal</em>
-</div>
-
-* Blue bars: This framework (quantum)
-* Orange bars: Greedy or exhaustive classical method
-
-Over 95% of quantum outputs fall within 5% of the global optimum.
-
----
 
 ### Summary
 
@@ -276,16 +258,27 @@ CQF achieves high fidelity in both problems:
   <br><em>Measured output bitstrings – inter-cell assignment / intra-cell assignment</em>
 </div>
 
+### Accuracy Compared to Baseline
+
+The figures below compare the quantum algorithm’s solution quality to classical baselines.
 <div align="center">
   <img src="fig/intra_dt_result.png" width="380"/>
   <img src="fig/inter_dt_result.png" width="380"/>
   <br><em>fig/intra_dt_result.png and fig/inter_dt_result.png — % of solutions within X% of optimal</em>
 </div>
 
+* Blue bars: This framework (quantum)
+* Orange bars: Greedy or exhaustive classical method
+
+Over 95% of quantum outputs fall within 5% of the global optimum.
+
+### Digital Twin Simulatoin Results
+
 <p align="center">
   <img src="fig/fig6_performance_map.png" width="700"/>
   <br><em>Fig 6 – Simulation results for Korea University campus deployment</em>
 </p>
+
 ---
 
 ## 13. Citation
