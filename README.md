@@ -200,7 +200,7 @@ Swap in your own `cost_matrix` and you have a ready-made quantum optimiser.
 | -------------- | ------------------------------------------------------------- |
 | **UE**         | User Equipment (handset, laptop, …)                           |
 | **AP**         | Access Point (cell)                                           |
-| **RB**         | OFDMA Resource Block                                          |
+| **RB**         | Resource Block                                          |
 | **Oracle**     | Quantum circuit that marks feasible states (and adds a phase) |
 | **Phase kick** | Rotate \|ψ⟩ by φ ∝ cost                                       |
 
