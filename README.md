@@ -269,6 +269,120 @@ The quantum algorithm solves both **inter-cell** (user-to-AP) and **intra-cell**
 - Top right: Intra-cell assignment maximizes total throughput to multiple UEs sharing an AP.
 - Right panels: Histograms show how often the quantum algorithm outputs near-optimal solutions.
 
+## 10. Complexity
+
+This section summarizes the asymptotic and measured runtime models we use in CQF for a system with **M users** and **N resources** (we use the common regime **N ≈ M/10**). Unless noted otherwise, all logarithms are base‑2.
+
+## 1) Empirical scaling (trendline fits)
+
+We fit simple trendlines (units: **nanoseconds**) to the log–log curves obtained from our experiments. These capture practical constants while preserving the dominant growth rates.
+
+* **Proposed runtime (baseline):**
+  $t \;=\; 126.63\, M\,\log M\; +\; 4031 \;(\text{ns})$
+* **Proposed runtime (enhanced):**
+  $t \;=\; 31.63\, M\,\log M\; +\; 1008 \;(\text{ns})$
+* **Quantized baseline:**
+  $t \;=\; 9.98\, M^{2}\,\log\log N\; -\; 27.4\,M\; +\; 1196 \;(\text{ns})$
+* **Classical (Hungarian, cubic fit):**
+  $t \;=\; 0.182\, M^{3} \;(\text{ns})$
+
+**Interpretation.** The proposed methods scale like **O(M,log M)** and stay below the quantized **O(M²,log\log N)** and classical **O(M³)** baselines beyond modest M. See the left plot for the fitted curves on log–log axes.
+
+![Empirical scaling](fig/fig_complex_UE.png)
+
+> **Axes.** Horizontal: users (M). Vertical: runtime in seconds (shown on a relative/log scale). We evaluate under the regime N ≈ M/10.
+
+## 2) Exact gate‑count model → t‑depth × quantum cycle time
+
+For the quantum versions we also provide an exact model derived from gate‑level **t‑depth** multiplied by a **quantum cycle time** $\tau$. We use $\tau = 50\,\text{ns}$ for the baseline and a reduced constant for the enhanced pipeline.
+
+* **Proposed runtime (baseline):**
+  $t \;=\; 50\,\text{ns}\;\Big[\; 2M\,\log M\; +\; 2M\,\log N\; +\; 2\log M\; +\; 2\log N\; +\; \log(M\,\log N) \;\Big]$
+
+* **Proposed runtime (enhanced / pipelined):**
+  $t \;=\; 12.5\,\text{ns}\;\Big[\; 2M\,\log M\; +\; 2M\,\log N\; +\; 2\log M\; +\; 2\log N\; +\; \log(M\,\log N) \;\Big]$
+  The enhanced line uses the same depth expression but a smaller effective cycle time (e.g., deeper parallelism/pipelining), giving a $\times4$ constant‑factor improvement.
+
+* **Quantized baseline:**
+  $t \;=\; 50\,\text{ns}\;\Big[\; (M^{2}-M)\,\log\log N \;\Big]$
+
+* **Classical (Hungarian):**
+  $t \;=\; \alpha\,M^{3}$
+  where $\alpha$ is fitted for a reference machine (\~48 cores @ 3.5 GHz, \~90 GB/s memory BW), to overlay the dashed curve in the plot below.
+
+![Exact t‑depth model](fig/runtime_plot_UE.png)
+
+### Notes & assumptions
+
+* Regime: **N ≈ M/10** throughout the figures.
+* Logarithms are base‑2; constant terms inside logs reflect register sizing and control.
+* Units on the vertical axis are seconds (log scale); formulas above show **ns** coefficients to match cycle‑level models.
+* The enhanced curve reflects improved constant factors via parallel organization; the asymptotic order remains **O(M log M)**.
+
+---
+
+**Reproducing the figures.** Place the generated PNGs at `fig/fig_complex_UE.png` and `fig/runtime_plot_UE.png` (filenames can be changed, but keep links in this section in sync). If you prefer vector outputs, export as PDF/SVG using the same filenames.
+
+## How we derive these formulas (gate model → t‑depth → runtime)
+
+Below is the gate‑level origin of the expressions used in the two plots. We count Clifford+T gates under the **relative‑phase Toffoli** cost model (4 T, T‑depth 1). Let
+
+* **M** = number of UEs, **N** = number of APs,
+* **k** = ⌈log₂N⌉ (address bits), **w** = ⌈log₂(M+1)⌉ (per‑AP counter width),
+* **τ** = t\_cycle (quantum cycle time; 50 ns for the baseline),
+* **τ(ε)** = synthesis cost for one controlled phase (≈ Θ(log(1/ε))).
+
+### A) Oracle (access‑limit check + mark)
+
+1. **(u,a) flag, \[sel₍u₎=a]**
+   XNORs (Clifford) + k‑input AND via a Toffoli tree → **2(k−1)** Toffoli per flag, forward+uncompute.
+   For all **MN** flags:
+   `T_flag = MN · 8(k−1)`.
+
+2. **Conditional +1 into AP counter (width w)**
+   Ripple increment once per (u,a) when the flag is 1. Per increment ≈ **2w−1** Toffoli (no reverse compute of the increment itself):
+   `T_inc = MN · (8w − 4)`.
+
+3. **Per‑AP limit compare (≤Uₐ) and global AND, then mark**
+   Per AP compare (do+undo) ≈ **2w** Toffoli → **8w** T‑count; AND over **N** AP results (do+undo) = **2(N−1)** Toffoli → **8(N−1)** T‑count:
+   `T_limit = 8Nw + 8(N−1)`.
+
+4. **Optional weight phases**
+   `T_wt = MN · τ(ε)`.
+
+**Oracle total (T‑count)** — dominant term:
+`T_oracle = MN·8(k+w) + 8Nw + 8(N−1) + MN·τ(ε)`.
+
+**Oracle T‑depth**
+With sufficient parallelism (compute all flags in parallel; balance trees for popcount/AND):
+`D_oracle = Θ(k + w·log M + log N)`.
+With limited parallelism (conservative):
+`D_oracle ≈ Θ(N·log N)`.
+
+### B) Diffusion (Grover reflection)
+
+For the **Mk**‑bit selection register:
+T‑count ≈ `c_diff · Mk`.
+T‑depth ≈ `Θ(log(Mk)) = Θ(log M + log log N)`.
+
+### C) One iteration (oracle + diffusion)
+
+`T_iter = 8MN(k+w) + 8Nw + 8(N−1) + MN·τ(ε) + c_diff·Mk`
+`D_iter = Θ(k + w·log M + log N) + Θ(log M + log log N)`
+
+**Runtime rule.** Clifford cost is 0; `t ≃ D_T · τ` for one iteration. With iteration count `R ≃ \~O(√(|C|/|F|))`, the end‑to‑end runtime is `t_total ≃ R · D_T · τ`.
+
+### Mapping to the plotted formulas
+
+* **Exact model plot.** Substitute `k ≈ log₂N`, `w ≈ log₂M`, balance the trees, and keep only depth‑contributing terms →
+  `D_T ≈ 2M·log M + 2M·log N + 2·log M + 2·log N + log(M·log N)`.
+  The last term comes from diffusion over a register of size `Mk`. Multiply by `τ = 50 ns` (baseline) for the blue curve; the **enhanced** curve multiplies the same depth by `τ = 12.5 ns` to reflect a 4× constant‑factor improvement (pipelining/parallel scheduling).
+* **Trendline plot.** Fit `t = a·M·log M + b` (ns) to the exact‑model points. With `N ≈ M/10`, `log N ≃ log M − log 10` is absorbed into the constant and linear‑in‑log terms. This yields the reported coefficients (e.g., 126.63 and 31.63 for baseline/enhanced).
+* **Quantized baseline.** Use analytic driver `(M²−M)·log log N`, multiply by `50 ns`.
+* **Classical.** Use `t = α·M³`, with `α` fitted on a reference workstation to overlay the dashed curve.
+
+> Using **standard Toffoli (7 T)** instead of relative‑phase Toffoli scales all T‑counts by **7/4**; depths stay the same up to constants.
+
 ---
 
 ## 10. Citation
