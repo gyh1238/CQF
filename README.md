@@ -375,7 +375,7 @@ T‑depth ≈ `Θ(log(Mk)) = Θ(log M + log log N)`.
   The last term comes from diffusion over a register of size `Mk`. Multiply by `τ = 50 ns` (baseline) for the blue curve; the **enhanced** curve multiplies the same depth by `τ = 12.5 ns` to reflect a 4× constant‑factor improvement (pipelining/parallel scheduling).
 * **Trendline plot.** Fit `t = a·M·log M + b` (ns) to the exact‑model points. With `N ≈ M/10`, `log N ≃ log M − log 10` is absorbed into the constant and linear‑in‑log terms. This yields the reported coefficients (e.g., 126.63 and 31.63 for baseline/enhanced).
 * **Quantized baseline.** Use analytic driver `(M²−M)·log log N`, multiply by `50 / 5 ns`. 5 means using more 4logN bits. (constant-factor improvement for comparison)
-* **Classical.** Use `t =  $\alpha$·M³`, with ` $\alpha$` fitted on a reference workstation to overlay the dashed curve.
+* **Classical.** Use `t =  α·M³`, with `α` fitted on a reference workstation to overlay the dashed curve.
 
 > Using **standard Toffoli (7 T)** instead of relative‑phase Toffoli scales all T‑counts by **7/4**; depths stay the same up to constants.
 
