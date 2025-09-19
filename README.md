@@ -278,13 +278,13 @@ This section summarizes the asymptotic and measured runtime models we use in CQF
 We fit simple trendlines (units: **nanoseconds**) to the log–log curves obtained from our experiments. These capture practical constants while preserving the dominant growth rates.
 
 * **Proposed runtime (baseline):**
-  $t \;=\; 126.63\, M\,\log M\; +\; 4031 \;(\text{ns})$
+  $t = 126.63\, M\,\log M + 4031 (\text{ns})$
 * **Proposed runtime (enhanced):**
-  $t \;=\; 31.63\, M\,\log M\; +\; 1008 \;(\text{ns})$
+  $t = 31.63\, M\,\log M + 1008 (\text{ns})$
 * **Quantized baseline:**
-  $t \;=\; 9.98\, M^{2}\,\log\log N\; -\; 27.4\,M\; +\; 1196 \;(\text{ns})$
+  $t = 9.98\, M^{2}\,\log\log N - 27.4\,M + 1196 (\text{ns})$
 * **Classical (Hungarian, cubic fit):**
-  $t \;=\; 0.182\, M^{3} \;(\text{ns})$
+  $t = 0.182\, M^{3} (\text{ns})$
 
 **Interpretation.** The proposed methods scale like **O(M,log M)** and stay below the quantized **O(M²,log\log N)** and classical **O(M³)** baselines beyond modest M. See the left plot for the fitted curves on log–log axes.
 
@@ -297,17 +297,17 @@ We fit simple trendlines (units: **nanoseconds**) to the log–log curves obtain
 For the quantum versions we also provide an exact model derived from gate‑level **t‑depth** multiplied by a **quantum cycle time** $\tau$. We use $\tau = 50\,\text{ns}$ for the baseline and a reduced constant for the enhanced pipeline.
 
 * **Proposed runtime (baseline):**
-  $t \;=\; 50\,\text{ns}\;\Big[\; 2M\,\log M\; +\; 2M\,\log N\; +\; 2\log M\; +\; 2\log N\; +\; \log(M\,\log N) \;\Big]$
+  $t = 50\,\text{ns}\Big[ 2M\,\log M + 2M\,\log N + 2\log M + 2\log N + \log(M\,\log N) \Big]$
 
 * **Proposed runtime (enhanced / pipelined):**
-  $t \;=\; 12.5\,\text{ns}\;\Big[\; 2M\,\log M\; +\; 2M\,\log N\; +\; 2\log M\; +\; 2\log N\; +\; \log(M\,\log N) \;\Big]$
+  $t = 12.5\,\text{ns}\Big[ 2M\,\log M + 2M\,\log N + 2\log M + 2\log N + \log(M\,\log N) \Big]$
   The enhanced line uses the same depth expression but a smaller effective cycle time (e.g., deeper parallelism/pipelining), giving a $\times4$ constant‑factor improvement.
 
 * **Quantized baseline:**
-  $t \;=\; 50\,\text{ns}\;\Big[\; (M^{2}-M)\,\log\log N \;\Big]$
+  $t = 50\,\text{ns}\Big[ (M^{2}-M)\,\log\log N \Big]$
 
 * **Classical (Hungarian):**
-  $t \;=\; \alpha\,M^{3}$
+  $t = \alpha\,M^{3}$
   where $\alpha$ is fitted for a reference machine (\~48 cores @ 3.5 GHz, \~90 GB/s memory BW), to overlay the dashed curve in the plot below.
 
 ### Notes & assumptions
@@ -375,7 +375,7 @@ T‑depth ≈ `Θ(log(Mk)) = Θ(log M + log log N)`.
   The last term comes from diffusion over a register of size `Mk`. Multiply by `τ = 50 ns` (baseline) for the blue curve; the **enhanced** curve multiplies the same depth by `τ = 12.5 ns` to reflect a 4× constant‑factor improvement (pipelining/parallel scheduling).
 * **Trendline plot.** Fit `t = a·M·log M + b` (ns) to the exact‑model points. With `N ≈ M/10`, `log N ≃ log M − log 10` is absorbed into the constant and linear‑in‑log terms. This yields the reported coefficients (e.g., 126.63 and 31.63 for baseline/enhanced).
 * **Quantized baseline.** Use analytic driver `(M²−M)·log log N`, multiply by `50 / 5 ns`. 5 means using more 4logN bits. (constant-factor improvement for comparison)
-* **Classical.** Use `t = τ·M³`, with `τ` fitted on a reference workstation to overlay the dashed curve.
+* **Classical.** Use `t =  $\alpha$·M³`, with ` $\alpha$` fitted on a reference workstation to overlay the dashed curve.
 
 > Using **standard Toffoli (7 T)** instead of relative‑phase Toffoli scales all T‑counts by **7/4**; depths stay the same up to constants.
 
