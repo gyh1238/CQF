@@ -310,8 +310,6 @@ For the quantum versions we also provide an exact model derived from gate‑leve
   $t \;=\; \alpha\,M^{3}$
   where $\alpha$ is fitted for a reference machine (\~48 cores @ 3.5 GHz, \~90 GB/s memory BW), to overlay the dashed curve in the plot below.
 
-![Exact t‑depth model](fig/runtime_plot_UE.png)
-
 ### Notes & assumptions
 
 * Regime: **N ≈ M/10** throughout the figures.
@@ -320,8 +318,6 @@ For the quantum versions we also provide an exact model derived from gate‑leve
 * The enhanced curve reflects improved constant factors via parallel organization; the asymptotic order remains **O(M log M)**.
 
 ---
-
-**Reproducing the figures.** Place the generated PNGs at `fig/fig_complex_UE.png` and `fig/runtime_plot_UE.png` (filenames can be changed, but keep links in this section in sync). If you prefer vector outputs, export as PDF/SVG using the same filenames.
 
 ## How we derive these formulas (gate model → t‑depth → runtime)
 
@@ -365,10 +361,10 @@ For the **Mk**‑bit selection register:
 T‑count ≈ `c_diff · Mk`.
 T‑depth ≈ `Θ(log(Mk)) = Θ(log M + log log N)`.
 
-### C) One iteration (oracle + diffusion)
+### C) oracle + diffusion
 
-`T_iter = 8MN(k+w) + 8Nw + 8(N−1) + MN·τ(ε) + c_diff·Mk`
-`D_iter = Θ(k + w·log M + log N) + Θ(log M + log log N)`
+`T_total = 8MN(k+w) + 8Nw + 8(N−1) + MN·τ(ε) + c_diff·Mk`
+`D_total = Θ(k + w·log M + log N) + Θ(log M + log log N)`
 
 **Runtime rule.** Clifford cost is 0; `t ≃ D_T · τ` for one iteration. With iteration count `R ≃ \~O(√(|C|/|F|))`, the end‑to‑end runtime is `t_total ≃ R · D_T · τ`.
 
@@ -378,14 +374,14 @@ T‑depth ≈ `Θ(log(Mk)) = Θ(log M + log log N)`.
   `D_T ≈ 2M·log M + 2M·log N + 2·log M + 2·log N + log(M·log N)`.
   The last term comes from diffusion over a register of size `Mk`. Multiply by `τ = 50 ns` (baseline) for the blue curve; the **enhanced** curve multiplies the same depth by `τ = 12.5 ns` to reflect a 4× constant‑factor improvement (pipelining/parallel scheduling).
 * **Trendline plot.** Fit `t = a·M·log M + b` (ns) to the exact‑model points. With `N ≈ M/10`, `log N ≃ log M − log 10` is absorbed into the constant and linear‑in‑log terms. This yields the reported coefficients (e.g., 126.63 and 31.63 for baseline/enhanced).
-* **Quantized baseline.** Use analytic driver `(M²−M)·log log N`, multiply by `50 ns`.
-* **Classical.** Use `t = α·M³`, with `α` fitted on a reference workstation to overlay the dashed curve.
+* **Quantized baseline.** Use analytic driver `(M²−M)·log log N`, multiply by `50 / 5 ns`. 5 means using more 4logN bits. (constant-factor improvement for comparison)
+* **Classical.** Use `t = τ·M³`, with `τ` fitted on a reference workstation to overlay the dashed curve.
 
 > Using **standard Toffoli (7 T)** instead of relative‑phase Toffoli scales all T‑counts by **7/4**; depths stay the same up to constants.
 
 ---
 
-## 10. Citation
+## 11. Citation
 
 If you use CQF in your research, please cite the following article:
 
@@ -400,7 +396,7 @@ If you use CQF in your research, please cite the following article:
 
 ---
 
-## 14. Contact
+## 12. Contact
 
 For questions or contributions, open an issue or contact:
 📧 **[gyh1237@gmail.com](mailto:gyh1237@gmail.com)**
