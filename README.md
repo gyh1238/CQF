@@ -273,7 +273,7 @@ The quantum algorithm solves both **inter-cell** (user-to-AP) and **intra-cell**
 
 This section summarizes the asymptotic and measured runtime models we use in CQF for a system with **M users** and **N resources** (we use the common regime **N ≈ M/10**). Unless noted otherwise, all logarithms are base‑2.
 
-## 1) Empirical scaling (trendline fits)
+### 1) Empirical scaling (trendline fits)
 
 We fit simple trendlines (units: **nanoseconds**) to the log–log curves obtained from our experiments. These capture practical constants while preserving the dominant growth rates.
 
@@ -292,7 +292,7 @@ We fit simple trendlines (units: **nanoseconds**) to the log–log curves obtain
 
 > **Axes.** Horizontal: users (M). Vertical: runtime in seconds (shown on a relative/log scale). We evaluate under the regime N ≈ M/10.
 
-## 2) Exact gate‑count model → t‑depth × quantum cycle time
+### 2) Exact gate‑count model → t‑depth × quantum cycle time
 
 For the quantum versions we also provide an exact model derived from gate‑level **t‑depth** multiplied by a **quantum cycle time** $\tau$. We use $\tau = 50\,\text{ns}$ for the baseline and a reduced constant for the enhanced pipeline.
 
@@ -310,7 +310,7 @@ For the quantum versions we also provide an exact model derived from gate‑leve
   $t = \alpha\,M^{3}$
   where $\alpha$ is fitted for a reference machine (\~48 cores @ 3.5 GHz, \~90 GB/s memory BW), to overlay the dashed curve in the plot below.
 
-### Notes & assumptions
+#### Notes & assumptions
 
 * Regime: **N ≈ M/10** throughout the figures.
 * Logarithms are base‑2; constant terms inside logs reflect register sizing and control.
@@ -319,7 +319,7 @@ For the quantum versions we also provide an exact model derived from gate‑leve
 
 ---
 
-## How we derive these formulas (gate model → t‑depth → runtime)
+### How we derive these formulas (gate model → t‑depth → runtime)
 
 Below is the gate‑level origin of the expressions used in the two plots. We count Clifford+T gates under the **relative‑phase Toffoli** cost model (4 T, T‑depth 1). Let
 
@@ -328,7 +328,7 @@ Below is the gate‑level origin of the expressions used in the two plots. We co
 * **τ** = t\_cycle (quantum cycle time; 50 ns for the baseline),
 * **τ(ε)** = synthesis cost for one controlled phase (≈ Θ(log(1/ε))).
 
-### A) Oracle (access‑limit check + mark)
+#### A) Oracle (access‑limit check + mark)
 
 1. **(u,a) flag, \[sel₍u₎=a]**
    XNORs (Clifford) + k‑input AND via a Toffoli tree → **2(k−1)** Toffoli per flag, forward+uncompute.
@@ -355,20 +355,20 @@ With sufficient parallelism (compute all flags in parallel; balance trees for po
 With limited parallelism (conservative):
 `D_oracle ≈ Θ(N·log N)`.
 
-### B) Diffusion (Grover reflection)
+#### B) Diffusion (Grover reflection)
 
 For the **Mk**‑bit selection register:
 T‑count ≈ `c_diff · Mk`.
 T‑depth ≈ `Θ(log(Mk)) = Θ(log M + log log N)`.
 
-### C) oracle + diffusion
+#### C) oracle + diffusion
 
 `T_total = 8MN(k+w) + 8Nw + 8(N−1) + MN·τ(ε) + c_diff·Mk`
 `D_total = Θ(k + w·log M + log N) + Θ(log M + log log N)`
 
 **Runtime rule.** Clifford cost is 0; `t ≃ D_T · τ` for one iteration. With iteration count `R ≃ \~O(√(|C|/|F|))`, the end‑to‑end runtime is `t_total ≃ R · D_T · τ`.
 
-### Mapping to the plotted formulas
+#### Mapping to the plotted formulas
 
 * **Exact model plot.** Substitute `k ≈ log₂N`, `w ≈ log₂M`, balance the trees, and keep only depth‑contributing terms →
   `D_T ≈ 2M·log M + 2M·log N + 2·log M + 2·log N + log(M·log N)`.
@@ -381,7 +381,46 @@ T‑depth ≈ `Θ(log(Mk)) = Θ(log M + log log N)`.
 
 ---
 
-## 11. Citation
+## 11. Hardware-Aware Experiments and Evaluation
+
+We evaluate circuits under realistic device assumptions rather than idealized simulation. Experiments target IBM Quantum backends (when available) and an Aer simulator configured with calibrated noise and timing to mirror NISQ conditions.
+
+### Hardware realism
+
+* **Connectivity & routing.** Transpilation is topology-aware. Routing overhead is reported explicitly. Because routing may appear as **SWAP gates** *or* **bridge decompositions** (CX chains), we report both **SWAP count** and **total 2-qubit gates**.
+* **Scheduling & timing model.** Circuits are scheduled (ALAP) with instruction durations in integer **dt** (e.g., single-qubit \~50 dt, two-qubit \~200 dt, measurement/reset \~500 dt for simulator studies).
+* **Virtual-Z.** Phase updates (`rz`/`p`/`u1`) are **virtual** frame shifts modeled with **zero duration**; they do not increase depth but are counted after transpilation.
+* **Noise (simulator).** Thermal relaxation (T1/T2) + depolarizing + readout errors; hardware runs rely on backend-provided properties.
+
+### Error-mitigation knobs
+
+* **Dynamic decoupling (DD).** Even-length sequences (e.g., X–X/CPMG) are inserted on idle windows after scheduling.
+* **Relative-phase Toffoli.** Multi-controlled operations prefer relative-phase variants to reduce non-Clifford cost and depth.
+* **Virtual-Z corrections.** Phase adjustments without extra gate time.
+
+### Metrics reported per experiment
+
+* **Qubits used.**
+* **Depth** (scheduled): **no-DD** and **with-DD**.
+* **Routing cost:** **SWAP count** and **total 2-qubit gates** (covers `cx`, `cz`, `ecr`, `swap`, etc.).
+* **Virtual-Z count:** `rz + p + u1` after transpilation.
+* **Top outcomes:** top-k bitstrings with counts.
+* **Task quality:** **feasible-set probability** (domain success metric).
+* **Distribution change:** **total variation distance** between no-DD and with-DD output distributions.
+
+### Interpreting results
+
+* **DD on vs off.** Depth increases with DD (idle windows are filled). Quality can improve when dephasing dominates; for short circuits or mild noise, the effect can be neutral.
+* **Routing overhead.** Increases in **2-qubit totals** or **SWAPs** indicate added compilation cost from limited connectivity. “SWAP = 0” does **not** imply “no routing”—bridge decompositions can raise the 2-qubit count substantially.
+* **Virtual-Z.** More `rz/p/u1` after transpilation reflects the decomposition of multi-controlled gates and does not by itself increase scheduled depth.
+
+### Reproducibility
+
+We log, for each run, the backend/noise model and instruction durations, depth (no-DD/with-DD), SWAPs, 2-qubit totals, virtual-Z counts, top outcomes, feasible-set probability, and distribution distance—enabling independent verification of hardware effects and mitigation settings under realistic assumptions.
+
+---
+
+## 12. Citation
 
 If you use CQF in your research, please cite the following article:
 
