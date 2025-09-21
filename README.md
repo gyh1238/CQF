@@ -242,19 +242,20 @@ CQF achieves high fidelity in both problems:
   <br><em>Measured output bitstrings – inter-cell assignment / intra-cell assignment</em>
 </div>
 
-### Accuracy Compared to Baseline
 
-The figures below compare the proposed quantum algorithm’s solution quality to quantized quantum baselines.
-<div align="center">
-  <img src="fig/intra_dt_result.png" width="380"/>
-  <img src="fig/inter_dt_result.png" width="380"/>
-  <br><em>fig/intra_dt_result.png and fig/inter_dt_result.png — % of solutions within X% of optimal</em>
-</div>
+## Accuracy Compared to Baselines
 
-* Blue bars: This framework
-* Orange bars: Quantized Quantum method
+The figures compare the proposed quantum algorithm against three baselines (**QNN**, **Classical**, **Quantized**) using the share of solutions within a given deviation from the optimal.
 
-Over 95% of quantum outputs fall within 5% of the global optimum.
+* **fig/intra\_dt\_result.png** and **fig/inter\_dt\_result.png** — percentage of solutions within X% of the optimum (bins: <2%, 4%, 6%, 8%, >10%).
+* Legend: **Blue = Proposed**, **Orange = QNN**, **Pink = Classical**, **Red = Quantized**.
+
+**Key takeaways.**
+
+* **Proposed:** \~95–98% of runs fall within **<2%** of the optimum across both intra- and inter-cell tasks.
+* **QNN / Classical:** typically **\~93–96%** within **<2%**, close to the proposed method.
+* **Quantized:** **\~62–69%** within **<2%**, and it accounts for most **>10%** deviations (≈12–21%).
+* 
 
 ### Assignment Outputs (With Digital Twin Implementation)
 
@@ -265,9 +266,11 @@ The quantum algorithm solves both **inter-cell** (user-to-AP) and **intra-cell**
   <br><em>Simulation results for X University campus deployment</em>
 </p>
 
-- Bottom left: Inter-cell assignment minimizes total power across APs under capacity limits.
-- Top right: Intra-cell assignment maximizes total throughput to multiple UEs sharing an AP.
-- Right panels: Histograms show how often the quantum algorithm outputs near-optimal solutions.
+* **Inter-cell assignment** (bottom-left of the composite figure): minimizes **total AP power** under capacity constraints.
+* **Intra-cell assignment** (top-right): maximizes **sum throughput** for multiple UEs sharing an AP.
+* **Right-side panels:** histograms (same bins as above) show how frequently each method returns **near-optimal** solutions, with the proposed method leading and the quantized baseline showing the largest tails.
+
+---
 
 ## 10. Complexity
 
