@@ -185,8 +185,8 @@ CQF achieves high fidelity in both problems:
 ### Inference Histograms
 
 <div align="center">
-  <img src="fig/inter_histogram.png" width="380"/>
-  <img src="fig/intra_histogram.png" width="380"/>
+  <img src="fig/inter_histogram.png" width="500"/>
+  <img src="fig/intra_histogram.png" width="500"/>
   <br><em>Measured output bitstrings – inter-cell assignment / intra-cell assignment</em>
 </div>
 
@@ -196,9 +196,9 @@ CQF achieves high fidelity in both problems:
 The figures below compare the proposed quantum algorithm’s solution quality to quantized quantum baselines.
 
 <div align="center">
-  <img src="fig/intra_dt_result.png" width="380"/>
-  <img src="fig/inter_dt_result.png" width="380"/>
-  <br><em>fig/intra_dt_result.png and fig/inter_dt_result.png — % of solutions within X% of optimal</em>
+  <img src="fig/intra_dt_result.png" width="500"/>
+  <img src="fig/inter_dt_result.png" width="500"/>
+  <br><em>fig/intra_dt_result.png and fig/inter_dt_result.png</em>
 </div>
 
 The figures compare the proposed quantum algorithm against three baselines (**QNN**, **Classical**, **Quantized**) using the share of solutions within a given deviation from the optimal.
@@ -218,7 +218,7 @@ The quantum algorithm solves both **inter-cell** (user-to-AP) and **intra-cell**
 
 <p align="center">
   <img src="fig/fig6_performance_map.png" width="700"/>
-  <br><em>Simulation results for X University campus deployment</em>
+  <br><em>Simulation results for Korea University campus deployment</em>
 </p>
 
 * **Inter-cell assignment** (bottom-left of the composite figure): minimizes **total AP power** under capacity constraints.
