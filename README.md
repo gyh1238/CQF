@@ -497,26 +497,6 @@ We evaluate circuits under realistic device assumptions rather than idealized si
 
 We report circuit resources right after construction (**raw**) and after transpilation for the Aer simulator (**transpiled**, optimization level = 1). Logged items include **qubits**, **depth**, **total gate counts** (with **SWAPs**), and **top operations** by count.
 
-## Intra-cell circuit (Aer)
-
-* **Qubits:** raw **18** → transpiled **18**
-* **Depth:** raw **137** → transpiled **123**
-* **Gate counts:** raw **276** → transpiled **225**
-* **SWAPs inserted:** **12**
-* **Top ops (transpiled):** `x:65`, `ccx:54`, `cx:40`, `reset:18`, `cry:18`, `u2:17`, `measure:6`, `mcx:4`
-
-## Inter-cell circuit (Aer)
-
-* **Qubits:** raw **10** → transpiled **10**
-* **Depth:** raw **51** → transpiled **38**
-* **Gate counts:** raw **141** → transpiled **106**
-* **SWAPs inserted:** **6**
-* **Top ops (transpiled):** `x:48`, `cry:16`, `mcx:14`, `reset:10`, `u2:7`, `h:4`, `measure:4`, `barrier:1`
-
----
-
-## Hardware-facing log
-
 ---
 
 #### Intra-cell (Aer + target backend snapshot)
