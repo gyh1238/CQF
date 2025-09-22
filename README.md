@@ -1,9 +1,9 @@
 # CQF – Continuous-valued Quantum Framework for Network Assignment  
-*A universal quantum framework for inter-/intra-cell resource optimisation*
+*A universal quantum framework for inter-/intra-cell resource optimization*
 
-> **Paper:** “A Universal Quantum Framework for Assignment Optimisation in  
+> **Paper:** “A Universal Quantum Framework for Assignment Optimization in  
 > Network Administration” (IEEE X, 20xx)  
-> **Authors:** Yong Hun Jang · Junyoung Hwang · Wookjin Lee · Sang Hyun Lee
+> **Authors:** Yong Hun Jang · Junyoung Hwang · Wookjin Lee · Hee Soo Kim and Sang Hyun Lee
 
 > **Version note**  
 > This repository contains code compatible with **Qiskit ≥ 1.0** (tested on 1.1).  
