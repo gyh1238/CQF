@@ -263,7 +263,7 @@ For the quantum versions we also provide an exact model derived from gate‑leve
 
 * **Quantized baseline:**
   $t = 50\text{ns}\Bigg[ \frac{(N^{2}-N)}{s}\log\log\!\left(\tfrac{N}{10}\right) \Bigg]$
-  Here \(N\) is the number of UEs, \(M\) the number of APs. The \(N^2\) term arises because the analytic driver effectively considers all unordered UE pairs (\(\binom{N}{2}\sim N^2/2\)); constants are absorbed into the prefactor. The \(\log\log M\) factor reflects the driver’s schedule depth for the \(M\)-ary address/threshold search. The parameter \(s\) captures depth reduction from qubit-level parallelism; Here $s \sim$ the rate at which circuit depth decreases when additional qubits are used. In practice, $s$ cannot grow arbitrarily: hardware parallelization limits and error-correction overheads cap the benefit. A value of $s=5$ is typically taken as a reasonable balance point between qubit overhead and depth reduction.
+  The $N^2$ term arises because the analytic driver effectively considers all unordered UE pairs $\binom{N}{2}\sim N^2/2$; constants are absorbed into the prefactor. The $\log\log M$ factor reflects the driver’s schedule depth for the $M$-ary address/threshold search. The parameter $s$ captures depth reduction from qubit-level parallelism; Here $s \sim$ the rate at which circuit depth decreases when additional qubits are used. In practice, $s$ cannot grow arbitrarily: hardware parallelization limits and error-correction overheads cap the benefit. A value of $s=5$ is typically taken as a reasonable balance point between qubit overhead and depth reduction.
 
 * **Classical (Hungarian):**
   $t = \alpha N^{3}$
