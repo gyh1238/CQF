@@ -263,7 +263,7 @@ For the quantum versions we also provide an exact model derived from gate‑leve
 
 * **Quantized baseline:**
   $t = 50\text{ns}\Bigg[ \frac{(N^{2}-N)}{s}\log\log\left(\tfrac{N}{10}\right) \Bigg]$
-  The $N^2$ term arises because the analytic driver effectively considers all unordered UE pairs $\binom{N}{2}\sim N^2/2$; constants are absorbed into the prefactor. The $\log\log M$ factor reflects the driver’s schedule depth for the $M$-ary address/threshold search. The parameter $s$ captures depth reduction from qubit-level parallelism; Here $s \sim$ the rate at which circuit depth decreases when additional qubits are used. In practice, $s$ cannot grow arbitrarily: hardware parallelization limits and error-correction overheads cap the benefit. A value of $s=5$ is typically taken as a reasonable balance point between qubit overhead and depth reduction.
+The $N^2$ term arises from UE pairwise comparisons, and $\log\log M$ reflects address search depth. The factor $s$ models depth reduction from qubit-level parallelism; it represents how circuit depth decreases as more qubits are used. However, $s$ is capped in practice due to hardware parallelization limits and error-correction overhead. We set $s = 5$ as a reasonable tradeoff. This quantized baseline allocates $NM$ qubits by replicating per-AP workspaces, instead of sharing address bits as in $N\log M$, motivating the empirical form of $s$.
 
 * **Classical (Hungarian):**
   $t = \alpha N^{3}$
